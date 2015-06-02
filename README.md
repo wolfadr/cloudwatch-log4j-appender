@@ -10,15 +10,21 @@ Emits log4j events into AWS CloudWatch streams.
     $ mvn install
 
 ## Usage
-
-See log4j2.xml for an example of registering the appender.
-
+```
+    <CloudWatchAppender name="CloudWatchAppender"
+                           awsLogGroupName="MyGroup"
+                           awsLogStreamName="CloudWatchAppender"
+                           awsLogStreamFlushPeriodInSeconds="5">
+      <PatternLayout>
+        <Pattern>%5p | %d{ISO8601}{UTC} | %t | %C | %M:%L | %m %ex %n</Pattern>
+      </PatternLayout>
+    </CloudWatchAppender>
+```
 ## Configuration variables
 
 Optional log4j appender plugin attributes:
 
-+ **name**: the name of the appender (default: "CloudWatchLogAppender").
-+ **awsLogGroupName**: the name of the AWS log group (default: "VI/Cloud/TestLogs").
++ **awsLogGroupName**: the name of the AWS log group (default: "unknown").
 + **awsLogStreamName**: the name of the AWS log stream inside the AWS log group from above (default: "Test Stream").
   Might also be be overridden by the LOG_STREAM_NAME environment variable (see below).
   Note that the stream name will always be suffixed by the current timestamp.
