@@ -162,6 +162,12 @@ public class CloudWatchAppender extends AbstractAppender {
             try {
                 final PutLogEventsResult putLogEventsResult = awsLogsClient.putLogEvents(putLogEventsRequest); // 1 MB or 10000 messages AWS cap!
                 sequenceTokenCache = putLogEventsResult.getNextSequenceToken();
+            } catch (final DataAlreadyAcceptedException daae) {
+                debug("DataAlreadyAcceptedException, will reset the token to the expected one");
+                sequenceTokenCache = daae.getExpectedSequenceToken();
+            } catch (final InvalidSequenceTokenException iste) {
+                debug("InvalidSequenceTokenException, will reset the token to the expected one");
+                sequenceTokenCache = iste.getExpectedSequenceToken();
             } catch (Exception e) {
                 debug("Error writing logs");
                 e.printStackTrace();
