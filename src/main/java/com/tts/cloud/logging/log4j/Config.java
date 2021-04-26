@@ -1,4 +1,4 @@
-package com.vi.aws.logging.log4jappenders;
+package com.tts.cloud.logging.log4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
